@@ -1,9 +1,8 @@
-import { Stack } from 'expo-router';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Link } from 'expo-router';
-import { styles } from './styles';
+import { View, Text, TouchableOpacity } from "react-native";
+import { Stack, Link } from "expo-router";
+import { styles } from "./styles";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
@@ -12,7 +11,7 @@ export default function Home() {
         Clique no começar para explorar todas as fotos e usuários disponíveis.
       </Text>
 
-      <Link href="/users" asChild>
+      <Link href="/users/" asChild replace>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Começar</Text>
         </TouchableOpacity>

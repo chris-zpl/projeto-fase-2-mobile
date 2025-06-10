@@ -1,10 +1,5 @@
-import { Stack } from 'expo-router';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Link } from 'expo-router';
-import Home from '@/components/home';
+import HomePage from '@/components/home-page';
 
-export default function Index() {
-  return (
-    <Home />
-  );
+export default function Home() {
+  return <HomePage />
 }

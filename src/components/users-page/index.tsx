@@ -1,32 +1,36 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  ActivityIndicator,
-  TextInput,
-} from "react-native";
-import { getUsers } from "@/services/api";
+import { View, Text, FlatList, TextInput } from "react-native";
+import Header from "@/components/header";
+import UserCard from "@/components/user-card";
+import LoadingIndicator from "@/components/loading";
+import { getUsers, getAlbumsByUser } from "@/services/api";
 import { User } from "@/services/types";
-import { styles } from "./styles";
-import Header from "../header";
-import Users from "../users";
 import { colors } from "@/styles/colors";
+import { styles } from "./styles";
 
-export default function UsersList() {
+export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [filtered, setFiltered] = useState<User[]>([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const load = async () => {
-      const data = await getUsers();
-      setUsers(data);
-      setFiltered(data);
+    const loadedContent = async () => {
+      const allUsers = await getUsers();
+      const usersWithAlbumCount = await Promise.all(
+        allUsers.map(async (user) => {
+          const albums = await getAlbumsByUser(user.id);
+          return {
+            ...user,
+            albumCount: albums.length,
+          };
+        })
+      );
+      setUsers(usersWithAlbumCount);
+      setFiltered(usersWithAlbumCount);
       setLoading(false);
     };
-    load();
+    loadedContent();
   }, []);
 
   const handleSearch = (text: string) => {
@@ -39,12 +43,7 @@ export default function UsersList() {
   };
 
   if (loading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color={colors.blue[600]} />
-        <Text>Carregando...</Text>
-      </View>
-    );
+    return <LoadingIndicator />;
   }
 
   const renderEmptyResult = () => {
@@ -73,10 +72,11 @@ export default function UsersList() {
       <FlatList
         data={filtered}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <Users data={item} />}
+        renderItem={({ item }) => <UserCard id={item.id} name={item.name} albumCount={item.albumCount} />}
         style={styles.list}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={renderEmptyResult()}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );

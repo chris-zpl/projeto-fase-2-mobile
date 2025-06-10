@@ -1,17 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { styles } from "./styles";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
+import { User } from "@/services/types";
+import { styles } from "./styles";
 
-interface UserInfo {
-  data: {
-    id: number;
-    name: string;
-    albumCount?: number;
-  };
-}
-
-export default function Users({ data }: UserInfo) {
+export default function UserCard({ id, name, albumCount }: User) {
   const router = useRouter();
   return (
     <View style={styles.container}>
@@ -20,7 +13,7 @@ export default function Users({ data }: UserInfo) {
         onPress={() =>
           router.push({
             pathname: "/users/[userId]",
-            params: { userId: data.id.toString() },
+            params: { userId: id.toString() },
           })
         }
         activeOpacity={0.6}
@@ -29,8 +22,8 @@ export default function Users({ data }: UserInfo) {
           <Feather name="user" size={25} />
         </View>
         <View>
-          <Text style={styles.name}>{data.name}</Text>
-          <Text style={styles.albums}>Álbuns: {data.albumCount}</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.albums}>Álbuns: {albumCount}</Text>
         </View>
       </TouchableOpacity>
     </View>
