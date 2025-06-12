@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, Album, Photo } from "./types";
+import { User, Album, Photo } from "./interfaces";
 
 const api = axios.create({
   baseURL: "https://jsonplaceholder.typicode.com",
@@ -17,9 +17,9 @@ export const getAlbumsByUser = async (userId: number): Promise<Album[]> => {
   return data;
 };
 
-// Realiza um get e pegar as informações de um usuário específico
-export const getUserById = async (userId: number): Promise<User> => {
-  const { data } = await api.get(`/users/${userId}`);
+// Realiza um get e pega as informações de um usuário específico
+export const getUserById = async (userId: number): Promise<User[]> => {
+  const { data } = await api.get("/users", { params: { userId } });
   return data;
 };
 
@@ -48,6 +48,7 @@ export const getAlbumsWithPhotoCount = async (userId: number): Promise<Album[]> 
   return completedAlbums;
 }
 
+// Realiza um get e pega as informações das fotos por álbum específico
 export const getPhotosByAlbum = async (albumId: number): Promise<Photo[]> => {
   const { data } = await api.get("/photos", { params: { albumId } });
   return data;

@@ -4,7 +4,7 @@ import Header from "@/components/header";
 import UserCard from "@/components/user-card";
 import LoadingIndicator from "@/components/loading";
 import { getUsers, getAlbumsByUser } from "@/services/api";
-import { User } from "@/services/types";
+import { User } from "@/services/interfaces";
 import { colors } from "@/styles/colors";
 import { styles } from "./styles";
 

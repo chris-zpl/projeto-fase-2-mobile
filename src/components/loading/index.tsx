@@ -4,7 +4,7 @@ import { styles } from "./styles";
 
 export default function LoadingIndicator() {
   return (
-    <View style={styles.center}>
+    <View style={styles.container}>
       <ActivityIndicator size="large" color={colors.blue[600]} />
       <Text>Carregando...</Text>
     </View>

@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { HeaderProps } from "@/services/types";
+import { HeaderProps } from "@/services/interfaces";
 import { styles } from "./styles";
 
 export default function Header({ title, subtitle }: HeaderProps) {

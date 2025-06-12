@@ -1,34 +1,34 @@
 import { useEffect, useState } from "react";
 import { View, FlatList, Text } from "react-native";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import Header from "@/components/header";
-import AlbumCard from "@/components/album-card";
+import PhotoCard from "@/components/photo-card";
 import LoadingIndicator from "@/components/loading";
-import { getUserById, getAlbumsWithPhotoCount, getAlbumsByUser } from "@/services/api";
-import { Album, User } from "@/services/types";
+import { getAlbumsByUser, getPhotosByAlbum } from "@/services/api";
+import { Album, Photo } from "@/services/interfaces";
 import { styles } from "./styles";
 
 export default function PhotosPage() {
-  const { userId } = useLocalSearchParams<{ userId: string }>();
+  const { userId, albumId } = useLocalSearchParams<{
+    userId: string;
+    albumId: string;
+  }>();
+  const [photos, setPhotos] = useState<Photo[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
-  const [albumsCount, setAlbumsCount] = useState<number>(0);
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [numColumns, setNumColumns] = useState<number>(2);
+  const currentAlbum = albums.find((album) => album.id === Number(albumId));
 
   useEffect(() => {
-    navigation.setOptions({ title: "" }); // Remove o título no header de retorno
     const loadedContent = async () => {
-      const userData = await getUserById(Number(userId));
-      const albumData = await getAlbumsWithPhotoCount(Number(userId));
-      const albumsCount = await getAlbumsByUser(Number(userId));
-      setUser(userData);
-      setAlbums(albumData);
-      setAlbumsCount(albumsCount.length);
+      const photosData = await getPhotosByAlbum(Number(albumId));
+      const albumsData = await getAlbumsByUser(Number(userId));
+      setAlbums(albumsData);
+      setPhotos(photosData);
       setLoading(false);
     };
     loadedContent();
-  }, [userId]);
+  }, [albumId]);
 
   if (loading) {
     return <LoadingIndicator />;
@@ -37,13 +37,26 @@ export default function PhotosPage() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Header
-          title="Teste"
-          subtitle="Selecione um ábum abaixo para visualizar suas fotos."
-        />
-        <Text style={styles.countAlbums}>Teste</Text>
+        <Header title={currentAlbum?.title} />
+        <Text style={styles.countAlbums}>Total: {photos.length}</Text>
       </View>
-      
+
+      <FlatList
+        data={photos}
+        style={styles.list}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={numColumns}
+        renderItem={({ item }) => (
+          <PhotoCard
+            userId={Number(userId)}
+            albumId={item.albumId}
+            id={item.id}
+            title={item.title}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listContent}
+      />
     </View>
   );
 }

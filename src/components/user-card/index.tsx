@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { Feather } from "@expo/vector-icons";
-import { User } from "@/services/types";
+import { User } from "@/services/interfaces";
 import { styles } from "./styles";
 
 export default function UserCard({ id, name, albumCount }: User) {

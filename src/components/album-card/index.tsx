@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { Album } from "@/services/types";
+import { Album } from "@/services/interfaces";
 import { styles } from "./styles";
 
 export default function AlbumCard({ id, userId, title, photoCount }: Album) {
@@ -19,7 +19,7 @@ export default function AlbumCard({ id, userId, title, photoCount }: Album) {
       >
         <View style={styles.albumContent}>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.photos}>Fotos: {photoCount}</Text>
+          <Text style={styles.photosCount}>Fotos: {photoCount}</Text>
         </View>
       </TouchableOpacity>
     </View>

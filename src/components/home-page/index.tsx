@@ -5,7 +5,6 @@ import { styles } from "./styles";
 export default function HomePage() {
   return (
     <View style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
       <Text style={styles.title}>Bem Vindo</Text>
       <Text style={styles.subtitle}>
         Clique no começar para explorar todas as fotos e usuários disponíveis.

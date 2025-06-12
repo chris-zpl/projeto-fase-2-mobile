@@ -3,31 +3,33 @@ import { colors } from "@/styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    flex:1,
+    padding: 10
   },
   card: {
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     backgroundColor: colors.white,
     padding: 15,
     borderRadius: 10,
+    flexGrow: 1,
+    borderWidth: 1,
+    borderColor: colors.gray[200]
   },
   title: {
     width: "100%",
     fontWeight: "bold",
-    fontSize: 16,
-    flexShrink: 1,
-    paddingEnd: 10
+    fontSize: 14,
+    textAlign: "center",
   },
-  photosCount: {
-    justifyContent: "center",
-    color: colors.gray[200],
-    flexShrink: 0,
+  photos: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
   },
-  albumContent: {
-    width: "100%",
-    flexDirection: "row",
+  photoContent: {
+    flex: 1,
+    flexDirection: "column",
     alignItems: "center",
-    flexShrink: 1,
   },
 });
