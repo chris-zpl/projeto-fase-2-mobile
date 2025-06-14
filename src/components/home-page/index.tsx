@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { Stack, Link } from "expo-router";
+import { Link } from "expo-router";
 import { styles } from "./styles";
 
 export default function HomePage() {
