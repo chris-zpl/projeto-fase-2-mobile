@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     borderColor: colors.gray[200]
   },
   title: {
-    width: "100%",
+    width: "auto",
     fontWeight: "bold",
     fontSize: 14,
     textAlign: "center",

@@ -20,7 +20,7 @@ export default function PhotosCard({ userId, albumId, id, title }: Photo) {
       >
         <View style={styles.photoContent}>
           <Image
-            source={{ uri: "https://placehold.co/80x80.png" }}
+            source={{ uri: "https://placehold.co/800x600.png" }}
             style={styles.photos}
             contentFit="cover"
           />

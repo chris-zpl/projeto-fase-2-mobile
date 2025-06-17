@@ -13,8 +13,6 @@ export default function UsersLayout() {
       }}
     >
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="[userId]" />
-      <Stack.Screen name="[userId]/[albumId]" />
       <Stack.Screen
         name="[userId]/[albumId]/[photoId]"
         options={{
